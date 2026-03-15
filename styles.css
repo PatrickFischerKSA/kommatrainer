@@ -36,23 +36,31 @@ body {
 .backdrop {
   position: fixed;
   inset: 0;
-  background:
-    linear-gradient(135deg, rgba(4, 10, 18, 0.82), rgba(12, 16, 30, 0.72)),
-    radial-gradient(circle at top left, rgba(246, 196, 83, 0.22), transparent 34%),
-    radial-gradient(circle at bottom right, rgba(66, 136, 255, 0.22), transparent 30%),
-    url("assets/Kommasetzen.jpg") center center / cover no-repeat;
-  filter: blur(18px) saturate(0.8);
-  transform: scale(1.08);
+  overflow: hidden;
   z-index: -2;
 }
 
+.backdrop::before,
 .backdrop::after {
   content: "";
   position: absolute;
   inset: 0;
+}
+
+.backdrop::before {
+  inset: -5%;
+  background: url("assets/Kommasetzen.jpg") center 28% / cover no-repeat;
+  filter: blur(10px) saturate(1) brightness(0.9);
+  opacity: 0.78;
+  transform: scale(1.08);
+}
+
+.backdrop::after {
   background:
-    linear-gradient(180deg, rgba(8, 13, 23, 0.15), rgba(8, 13, 23, 0.78)),
-    radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.12), transparent 24%);
+    linear-gradient(135deg, rgba(4, 10, 18, 0.34), rgba(12, 16, 30, 0.22)),
+    radial-gradient(circle at top left, rgba(246, 196, 83, 0.18), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(66, 136, 255, 0.18), transparent 30%),
+    linear-gradient(180deg, rgba(8, 13, 23, 0.04), rgba(8, 13, 23, 0.48));
 }
 
 .app-shell {
@@ -66,7 +74,7 @@ body {
   border: 1px solid var(--line);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)),
-    var(--panel);
+    rgba(10, 18, 30, 0.7);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow);
   backdrop-filter: blur(20px);

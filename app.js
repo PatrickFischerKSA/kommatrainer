@@ -1,7 +1,7 @@
 const RULES = [
   {
     id: "list",
-    label: "Reihung / Aufzaehlung",
+    label: "Reihung / Aufzählung",
     short: "Reihung",
   },
   {
@@ -24,13 +24,13 @@ const RULES = [
 const LEVELS = [
   {
     id: "beginner",
-    name: "Anfaenger",
+    name: "Anfänger",
     tag: "Start",
     subtitle: "Einstieg mit klaren Satzmustern",
     blurb:
-      "Kurze Saetze mit einer dominanten Regel. Ziel: sichere Klickroutine an allen Wortgrenzen.",
+      "Kurze Sätze mit einer dominanten Regel. Ziel: sichere Klickroutine an allen Wortgrenzen.",
     focus:
-      "Setze die fehlenden Kommas. Achte besonders auf einfache Aufzaehlungen, Zusaetze und Nebensaetze.",
+      "Setze die fehlenden Kommas. Achte besonders auf einfache Aufzählungen, Zusätze und Nebensätze.",
     requiresRules: false,
     tasks: [
       {
@@ -44,7 +44,7 @@ const LEVELS = [
       {
         id: "b2",
         prompt: "Setze die fehlenden Kommas.",
-        tokens: ["Wir", "kauften", "Brot", "Milch", "und", "Kaese."],
+        tokens: ["Wir", "kauften", "Brot", "Milch", "und", "Käse."],
         commas: [{ gap: 2, rule: "list" }],
         explanation:
           "In der Reihung steht das Komma nur zwischen den ersten Gliedern, nicht vor dem einfachen 'und'.",
@@ -75,7 +75,7 @@ const LEVELS = [
         ],
         commas: [{ gap: 3, rule: "subordinate" }],
         explanation:
-          "Der Nebensatz beginnt mit 'sobald' und wird vom uebergeordneten Satz durch ein Komma getrennt.",
+          "Der Nebensatz beginnt mit 'sobald' und wird vom übergeordneten Satz durch ein Komma getrennt.",
       },
       {
         id: "b5",
@@ -93,9 +93,9 @@ const LEVELS = [
     tag: "Mix",
     subtitle: "Gemischte Satzmuster und erste Stolperstellen",
     blurb:
-      "Mehrere moegliche Klickstellen, laengere Saetze und erste Prioritaetsfaelle aus dem Theorieblatt.",
+      "Mehrere mögliche Klickstellen, längere Sätze und erste Prioritätsfälle aus dem Theorieblatt.",
     focus:
-      "Setze die Kommas in gemischten Saetzen. Lass dich nicht von verlockenden Wortgrenzen taeuschen.",
+      "Setze die Kommas in gemischten Sätzen. Lass dich nicht von verlockenden Wortgrenzen täuschen.",
     requiresRules: false,
     tasks: [
       {
@@ -105,7 +105,7 @@ const LEVELS = [
           "Obwohl",
           "es",
           "schon",
-          "spaet",
+          "spät",
           "war",
           "blieben",
           "wir",
@@ -124,7 +124,7 @@ const LEVELS = [
         prompt: "Setze die fehlenden Kommas.",
         tokens: [
           "Mara",
-          "faehrt",
+          "fährt",
           "vor",
           "allem",
           "im",
@@ -170,7 +170,7 @@ const LEVELS = [
           { gap: 5, rule: "list" },
         ],
         explanation:
-          "In der Aufzaehlung stehen Kommas zwischen den ersten Gliedern, aber nicht vor dem letzten 'und'.",
+          "In der Aufzählung stehen Kommas zwischen den ersten Gliedern, aber nicht vor dem letzten 'und'.",
       },
       {
         id: "a5",
@@ -178,19 +178,19 @@ const LEVELS = [
         tokens: [
           "Nina",
           "meine",
-          "aeltere",
+          "ältere",
           "Schwester",
           "und",
           "Tom",
           "kamen",
-          "spaeter.",
+          "später.",
         ],
         commas: [
           { gap: 0, rule: "addition" },
           { gap: 3, rule: "addition" },
         ],
         explanation:
-          "Der Zusatz 'meine aeltere Schwester' muss mit Kommas abgegrenzt werden. Diese Regel hat Vorrang, auch wenn der Satz danach weiterreiht.",
+          "Der Zusatz 'meine ältere Schwester' muss mit Kommas abgegrenzt werden. Diese Regel hat Vorrang, auch wenn der Satz danach weiterreiht.",
       },
     ],
   },
@@ -200,7 +200,7 @@ const LEVELS = [
     tag: "Regeln",
     subtitle: "Kommas setzen und Regel benennen",
     blurb:
-      "Jede gesetzte Stelle braucht zusaetzlich die passende Duden-Regel. Die Optionen werden gemischt.",
+      "Jede gesetzte Stelle braucht zusätzlich die passende Duden-Regel. Die Optionen werden gemischt.",
     focus:
       "Setze erst die Kommas und ordne dann jeder Stelle die richtige Regel zu.",
     requiresRules: true,
@@ -224,7 +224,7 @@ const LEVELS = [
           { gap: 4, rule: "subordinate" },
         ],
         explanation:
-          "Erst wird der Zusatz 'mein Teamkollege' abgegrenzt, danach trennt ein Komma den anschliessenden Nebensatz ab.",
+          "Erst wird der Zusatz 'mein Teamkollege' abgegrenzt, danach trennt ein Komma den anschließenden Nebensatz ab.",
       },
       {
         id: "e2",
@@ -239,7 +239,7 @@ const LEVELS = [
           "und",
           "sprechen",
           "danach",
-          "darueber.",
+          "darüber.",
         ],
         commas: [
           { gap: 2, rule: "addition" },
@@ -271,7 +271,7 @@ const LEVELS = [
           { gap: 7, rule: "subordinate" },
         ],
         explanation:
-          "Der Satz kombiniert einen Zusatz und einen eingeschobenen Nebensatz. Beide Strukturen muessen sauber abgegrenzt werden.",
+          "Der Satz kombiniert einen Zusatz und einen eingeschobenen Nebensatz. Beide Strukturen müssen sauber abgegrenzt werden.",
       },
       {
         id: "e4",
@@ -286,7 +286,7 @@ const LEVELS = [
           "an",
           "manchen",
           "Stellen",
-          "gefaehrlich.",
+          "gefährlich.",
         ],
         commas: [{ gap: 3, rule: "list" }],
         explanation:
@@ -298,11 +298,11 @@ const LEVELS = [
     id: "pro",
     name: "Profi",
     tag: "Textlogik",
-    subtitle: "Lange Saetze mit ueberlagerten Regeln",
+    subtitle: "Lange Sätze mit überlagerten Regeln",
     blurb:
-      "Hier greifen mehrere Regeln zugleich. Ohne saubere Analyse laesst sich der Satz kaum korrekt kommasetzen.",
+      "Hier greifen mehrere Regeln zugleich. Ohne saubere Analyse lässt sich der Satz kaum korrekt kommasetzen.",
     focus:
-      "Setze alle Kommas und belege jede Stelle mit der richtigen Regel. Achte besonders auf Vorrangfaelle.",
+      "Setze alle Kommas und belege jede Stelle mit der richtigen Regel. Achte besonders auf Vorrangfälle.",
     requiresRules: true,
     tasks: [
       {
@@ -321,11 +321,11 @@ const LEVELS = [
           "nach",
           "vorn",
           "und",
-          "erklaerte",
+          "erklärte",
           "ruhig",
           "was",
           "als",
-          "Naechstes",
+          "Nächstes",
           "geschieht.",
         ],
         commas: [
@@ -335,7 +335,7 @@ const LEVELS = [
           { gap: 13, rule: "subordinate" },
         ],
         explanation:
-          "Der Satz beginnt mit einem Nebensatz, enthaelt danach einen Zusatz und endet mit einem weiteren Nebensatz.",
+          "Der Satz beginnt mit einem Nebensatz, enthält danach einen Zusatz und endet mit einem weiteren Nebensatz.",
       },
       {
         id: "p2",
@@ -350,7 +350,7 @@ const LEVELS = [
           "Beispiele",
           "die",
           "wir",
-          "spaeter",
+          "später",
           "vergleichen",
           "wollten.",
         ],
@@ -369,7 +369,7 @@ const LEVELS = [
           "der",
           "sonst",
           "nie",
-          "nervoes",
+          "nervös",
           "wirkt",
           "sprach",
           "weiter",
@@ -380,7 +380,7 @@ const LEVELS = [
           "beendete",
           "seinen",
           "Vortrag",
-          "souveraen.",
+          "souverän.",
         ],
         commas: [
           { gap: 0, rule: "addition" },
@@ -388,7 +388,7 @@ const LEVELS = [
           { gap: 7, rule: "subordinate" },
         ],
         explanation:
-          "Der eingeschobene Zusatz 'der sonst nie nervoes wirkt' wird umklammert, danach folgt ein Nebensatz mit 'obwohl'.",
+          "Der eingeschobene Zusatz 'der sonst nie nervös wirkt' wird umklammert, danach folgt ein Nebensatz mit 'obwohl'.",
       },
       {
         id: "p4",
@@ -404,7 +404,7 @@ const LEVELS = [
           "Gruppenarbeiten",
           "schnell",
           "klare",
-          "Loesungen",
+          "Lösungen",
           "findet.",
         ],
         commas: [
@@ -422,7 +422,7 @@ const LEVELS = [
           "Lina",
           "meine",
           "ruhigste",
-          "Schuelerin",
+          "Schülerin",
           "notierte",
           "Beobachtungen",
           "Beispiele",
@@ -443,7 +443,7 @@ const LEVELS = [
           { gap: 12, rule: "subordinate" },
         ],
         explanation:
-          "Der Satz verknuepft einen Zusatz mit einer Reihung und einem eingeschobenen Nebensatz. Hier zeigt sich der Vorrang der Struktur vor blosser Aufzaehlung besonders deutlich.",
+          "Der Satz verknüpft einen Zusatz mit einer Reihung und einem eingeschobenen Nebensatz. Hier zeigt sich der Vorrang der Struktur vor bloßer Aufzählung besonders deutlich.",
       },
     ],
   },
@@ -549,13 +549,13 @@ function updateHeader() {
   taskTitleEl.textContent = `${level.subtitle}`;
   taskSubtitleEl.textContent = `Aufgabe ${state.currentTaskIndex + 1} von ${
     level.tasks.length
-  } in ${level.name}. Bereits geloest: ${solvedInLevel}.`;
+  } in ${level.name}. Bereits gelöst: ${solvedInLevel}.`;
   taskInstructionEl.textContent = `${level.focus} ${task.prompt}`;
   scoreChipEl.textContent = `Trefferquote ${getAccuracy()}%`;
 }
 
 function updateProgressSummary() {
-  progressSummaryEl.textContent = `${state.solvedTaskIds.size} von ${getTotalTaskCount()} Aufgaben geloest`;
+  progressSummaryEl.textContent = `${state.solvedTaskIds.size} von ${getTotalTaskCount()} Aufgaben gelöst`;
 }
 
 function renderLevelCards() {
@@ -605,7 +605,7 @@ function resetTaskState() {
   checkBtn.disabled = false;
   resetBtn.disabled = false;
   setFeedback(
-    "Setze die fehlenden Kommas, indem du die Punkte zwischen den Woertern anklickst.",
+    "Setze die fehlenden Kommas, indem du die Punkte zwischen den Wörtern anklickst.",
     "info"
   );
   hideModel();
@@ -715,7 +715,7 @@ function renderRulePanel() {
 
     const placeholder = document.createElement("option");
     placeholder.value = "";
-    placeholder.textContent = "Regel waehlen";
+    placeholder.textContent = "Regel wählen";
     select.appendChild(placeholder);
 
     state.ruleOrder.forEach((rule) => {
@@ -787,10 +787,10 @@ function formatSentenceWithCommas(task) {
 
 function revealModel(task) {
   modelBoxEl.innerHTML = `
-    <p class="model-solution"><strong>Modellloesung:</strong> ${formatSentenceWithCommas(
+    <p class="model-solution"><strong>Modelllösung:</strong> ${formatSentenceWithCommas(
       task
     )}</p>
-    <p><strong>Begruendung:</strong> ${task.explanation}</p>
+    <p><strong>Begründung:</strong> ${task.explanation}</p>
     <div class="rule-tags">
       ${sortCommaData(task.commas)
         .map((comma, index) => {
@@ -850,7 +850,7 @@ function handleFailure(task) {
       );
     } else {
       setFeedback(
-        `${correctGapHits} von ${totalCommas} Kommas sitzen. Pruefe besonders Nebensaetze, Zusaetze und die Stellen vor einfachem 'und'.`,
+        `${correctGapHits} von ${totalCommas} Kommas sitzen. Prüfe besonders Nebensätze, Zusätze und die Stellen vor einfachem 'und'.`,
         "error"
       );
     }
@@ -858,7 +858,7 @@ function handleFailure(task) {
   }
 
   setFeedback(
-    "Noch nicht korrekt. Die Modellloesung ist jetzt eingeblendet, damit du den Satz analysieren kannst.",
+    "Noch nicht korrekt. Die Modelllösung ist jetzt eingeblendet, damit du den Satz analysieren kannst.",
     "info"
   );
   revealModel(task);
@@ -918,7 +918,7 @@ function clearSelection() {
   state.ruleSelections = {};
   buildSentenceArea();
   renderRulePanel();
-  setFeedback("Auswahl geloescht. Du kannst den Satz neu analysieren.", "info");
+  setFeedback("Auswahl gelöscht. Du kannst den Satz neu analysieren.", "info");
   hideModel();
 }
 

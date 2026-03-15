@@ -6,7 +6,7 @@
     <title>Kommatrainer</title>
     <meta
       name="description"
-      content="Interaktiver Kommatrainer mit vier Schwierigkeitsgraden, Klickstellen zwischen allen Woertern und Regelzuordnung fuer anspruchsvolle Aufgaben."
+      content="Interaktiver Kommatrainer mit vier Schwierigkeitsgraden, Klickstellen zwischen allen Wörtern und Regelzuordnung für anspruchsvolle Aufgaben."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -19,13 +19,13 @@
           <p class="eyebrow">Duden-basiertes Training</p>
           <h1>Kommatrainer</h1>
           <p class="lead">
-            Vier Niveaus, echte Satzlogik und keine verraeterischen Luecken:
+            Vier Niveaus, echte Satzlogik und keine verräterischen Lücken:
             Alle Wortgrenzen sind anklickbar, die Regeln werden erst nach der
-            Auswahl geprueft.
+            Auswahl geprüft.
           </p>
         </div>
 
-        <div class="hero-stats" aria-label="Uebersicht">
+        <div class="hero-stats" aria-label="Übersicht">
           <article>
             <span class="stat-label">Niveaus</span>
             <strong>4</strong>
@@ -46,7 +46,7 @@
           <section class="panel">
             <div class="section-head">
               <h2>Niveaus</h2>
-              <p id="progress-summary">0 von 19 Aufgaben geloest</p>
+              <p id="progress-summary">0 von 19 Aufgaben gelöst</p>
             </div>
             <div id="level-grid" class="level-grid" aria-label="Niveaus"></div>
           </section>
@@ -59,24 +59,24 @@
 
             <ul class="theory-list">
               <li>
-                <strong>Reihungen:</strong> Zwischen Gliedern einer Aufzaehlung
+                <strong>Reihungen:</strong> Zwischen Gliedern einer Aufzählung
                 steht ein Komma, aber nicht vor einfachem <em>und</em> oder
                 <em>oder</em>.
               </li>
               <li>
-                <strong>Nachgestellte Zusaetze:</strong> Einschuebe wie
+                <strong>Nachgestellte Zusätze:</strong> Einschübe wie
                 Appositionen werden am Anfang und am Ende mit Kommas
                 abgegrenzt.
               </li>
               <li>
-                <strong>Nebensaetze:</strong> Nebensaetze werden vom
-                uebergeordneten Satz mit Kommas getrennt, auch wenn sie
+                <strong>Nebensätze:</strong> Nebensätze werden vom
+                übergeordneten Satz mit Kommas getrennt, auch wenn sie
                 eingeschoben sind.
               </li>
               <li>
                 <strong>Vorrang:</strong> Wenn Zusatz oder Nebensatz in einer
                 Reihung steckt, ist die Abgrenzung wichtiger als die
-                Aufzaehlungsregel.
+                Aufzählungsregel.
               </li>
             </ul>
           </section>
@@ -84,14 +84,14 @@
           <section class="panel anti-guess-panel">
             <div class="section-head">
               <h2>Gegen Raten</h2>
-              <p>Die Darstellung verraet die Loesung nicht.</p>
+              <p>Die Darstellung verrät die Lösung nicht.</p>
             </div>
 
             <ul class="anti-guess-list">
               <li>Jede Wortgrenze sieht gleich aus und ist gleich anklickbar.</li>
-              <li>Es gibt keine vorbereiteten Luecken an den richtigen Stellen.</li>
+              <li>Es gibt keine vorbereiteten Lücken an den richtigen Stellen.</li>
               <li>Regeloptionen werden pro Aufgabe neu gemischt.</li>
-              <li>Die Modellloesung erscheint erst nach der Abgabe.</li>
+              <li>Die Modelllösung erscheint erst nach der Abgabe.</li>
             </ul>
           </section>
         </aside>
@@ -99,7 +99,7 @@
         <section class="trainer panel">
           <div class="trainer-head">
             <div>
-              <p class="eyebrow" id="current-level-label">Anfaenger</p>
+              <p class="eyebrow" id="current-level-label">Anfänger</p>
               <h2 id="task-title">Aufgabe</h2>
             </div>
             <div class="score-chip" id="score-chip">Trefferquote 0%</div>
@@ -130,20 +130,20 @@
 
           <div class="controls">
             <button id="check-btn" class="primary-btn" type="button">
-              Pruefen
+              Prüfen
             </button>
             <button id="reset-btn" class="ghost-btn" type="button">
-              Auswahl loeschen
+              Auswahl löschen
             </button>
             <button id="next-btn" class="secondary-btn hidden" type="button">
-              Naechste Aufgabe
+              Nächste Aufgabe
             </button>
           </div>
 
           <section id="feedback-box" class="feedback-box" aria-live="polite">
             <p id="feedback-text" class="feedback-text">
               Setze die fehlenden Kommas, indem du die Punkte zwischen den
-              Woertern anklickst.
+              Wörtern anklickst.
             </p>
             <div id="model-box" class="model-box hidden"></div>
           </section>

@@ -2,7 +2,7 @@
 
 Browserbasierter Kommatrainer mit vier Schwierigkeitsgraden:
 
-- `Anfaenger`
+- `Anfänger`
 - `Fortgeschrittener`
 - `Experte`
 - `Profi`
@@ -10,18 +10,18 @@ Browserbasierter Kommatrainer mit vier Schwierigkeitsgraden:
 Die Aufgaben basieren auf den zentralen Regeln des Theorieblatts:
 
 - Komma in Reihungen
-- Komma bei nachgestellten Zusaetzen
-- Komma bei Nebensaetzen
-- Vorrang von Zusatz- und Nebensatzregeln vor der blossen Aufzaehlungslogik
+- Komma bei nachgestellten Zusätzen
+- Komma bei Nebensätzen
+- Vorrang von Zusatz- und Nebensatzregeln vor der bloßen Aufzählungslogik
 
 ## Didaktische Idee
 
-Der Trainer vermeidet Darstellungsformen, bei denen Lernende die Loesung erraten koennen:
+Der Trainer vermeidet Darstellungsformen, bei denen Lernende die Lösung erraten können:
 
 - Jede Wortgrenze ist gleich gestaltet und gleich anklickbar.
-- Es gibt keine sichtbaren Luecken nur an richtigen Stellen.
+- Es gibt keine sichtbaren Lücken nur an richtigen Stellen.
 - In den schweren Niveaus werden Regeloptionen pro Aufgabe gemischt.
-- Die Modellloesung erscheint erst nach der Abgabe.
+- Die Modelllösung erscheint erst nach der Abgabe.
 
 ## Dateien
 
@@ -32,4 +32,4 @@ Der Trainer vermeidet Darstellungsformen, bei denen Lernende die Loesung erraten
 
 ## Nutzung
 
-`index.html` direkt im Browser oeffnen oder das Projekt als statische Seite deployen, zum Beispiel ueber GitHub Pages.
+`index.html` direkt im Browser öffnen oder das Projekt als statische Seite deployen, zum Beispiel über GitHub Pages.
