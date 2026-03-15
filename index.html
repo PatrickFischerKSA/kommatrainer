@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kommatrainer</title>
+    <meta
+      name="description"
+      content="Interaktiver Kommatrainer mit vier Schwierigkeitsgraden, Klickstellen zwischen allen Woertern und Regelzuordnung fuer anspruchsvolle Aufgaben."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true"></div>
+
+    <main class="app-shell">
+      <section class="hero panel">
+        <div class="hero-copy">
+          <p class="eyebrow">Duden-basiertes Training</p>
+          <h1>Kommatrainer</h1>
+          <p class="lead">
+            Vier Niveaus, echte Satzlogik und keine verraeterischen Luecken:
+            Alle Wortgrenzen sind anklickbar, die Regeln werden erst nach der
+            Auswahl geprueft.
+          </p>
+        </div>
+
+        <div class="hero-stats" aria-label="Uebersicht">
+          <article>
+            <span class="stat-label">Niveaus</span>
+            <strong>4</strong>
+          </article>
+          <article>
+            <span class="stat-label">Aufgabentypen</span>
+            <strong>2</strong>
+          </article>
+          <article>
+            <span class="stat-label">Regelbasis</span>
+            <strong>Duden</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="grid-layout">
+        <aside class="sidebar">
+          <section class="panel">
+            <div class="section-head">
+              <h2>Niveaus</h2>
+              <p id="progress-summary">0 von 19 Aufgaben geloest</p>
+            </div>
+            <div id="level-grid" class="level-grid" aria-label="Niveaus"></div>
+          </section>
+
+          <section class="panel theory-panel">
+            <div class="section-head">
+              <h2>Theorieblatt</h2>
+              <p>Verdichtet aus dem Duden-Blatt.</p>
+            </div>
+
+            <ul class="theory-list">
+              <li>
+                <strong>Reihungen:</strong> Zwischen Gliedern einer Aufzaehlung
+                steht ein Komma, aber nicht vor einfachem <em>und</em> oder
+                <em>oder</em>.
+              </li>
+              <li>
+                <strong>Nachgestellte Zusaetze:</strong> Einschuebe wie
+                Appositionen werden am Anfang und am Ende mit Kommas
+                abgegrenzt.
+              </li>
+              <li>
+                <strong>Nebensaetze:</strong> Nebensaetze werden vom
+                uebergeordneten Satz mit Kommas getrennt, auch wenn sie
+                eingeschoben sind.
+              </li>
+              <li>
+                <strong>Vorrang:</strong> Wenn Zusatz oder Nebensatz in einer
+                Reihung steckt, ist die Abgrenzung wichtiger als die
+                Aufzaehlungsregel.
+              </li>
+            </ul>
+          </section>
+
+          <section class="panel anti-guess-panel">
+            <div class="section-head">
+              <h2>Gegen Raten</h2>
+              <p>Die Darstellung verraet die Loesung nicht.</p>
+            </div>
+
+            <ul class="anti-guess-list">
+              <li>Jede Wortgrenze sieht gleich aus und ist gleich anklickbar.</li>
+              <li>Es gibt keine vorbereiteten Luecken an den richtigen Stellen.</li>
+              <li>Regeloptionen werden pro Aufgabe neu gemischt.</li>
+              <li>Die Modellloesung erscheint erst nach der Abgabe.</li>
+            </ul>
+          </section>
+        </aside>
+
+        <section class="trainer panel">
+          <div class="trainer-head">
+            <div>
+              <p class="eyebrow" id="current-level-label">Anfaenger</p>
+              <h2 id="task-title">Aufgabe</h2>
+            </div>
+            <div class="score-chip" id="score-chip">Trefferquote 0%</div>
+          </div>
+
+          <div class="task-meta">
+            <p id="task-subtitle" class="task-subtitle"></p>
+            <p id="task-instruction" class="task-instruction"></p>
+          </div>
+
+          <section class="sentence-panel">
+            <div
+              id="sentence-area"
+              class="sentence-area"
+              aria-live="polite"
+            ></div>
+          </section>
+
+          <section id="rule-panel" class="rule-panel hidden">
+            <div class="section-head">
+              <h3>Regeln zuordnen</h3>
+              <p>
+                Weise jedem gesetzten Komma die passende Duden-Regel zu.
+              </p>
+            </div>
+            <div id="rule-area" class="rule-area"></div>
+          </section>
+
+          <div class="controls">
+            <button id="check-btn" class="primary-btn" type="button">
+              Pruefen
+            </button>
+            <button id="reset-btn" class="ghost-btn" type="button">
+              Auswahl loeschen
+            </button>
+            <button id="next-btn" class="secondary-btn hidden" type="button">
+              Naechste Aufgabe
+            </button>
+          </div>
+
+          <section id="feedback-box" class="feedback-box" aria-live="polite">
+            <p id="feedback-text" class="feedback-text">
+              Setze die fehlenden Kommas, indem du die Punkte zwischen den
+              Woertern anklickst.
+            </p>
+            <div id="model-box" class="model-box hidden"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
