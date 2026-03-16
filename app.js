@@ -21,6 +21,22 @@ const RULES = [
   },
 ];
 
+const SUBORDINATE_STARTERS = new Set([
+  "als",
+  "bevor",
+  "dass",
+  "die",
+  "ob",
+  "obwohl",
+  "sobald",
+  "was",
+  "wenn",
+  "weil",
+  "während",
+]);
+
+const SIMPLE_COORDINATORS = new Set(["und", "oder"]);
+
 const LEVELS = [
   {
     id: "beginner",
@@ -741,6 +757,204 @@ function sortCommaData(commas) {
   return [...commas].sort((left, right) => left.gap - right.gap);
 }
 
+function normalizeToken(token) {
+  return token.toLowerCase().replace(/[.,;:!?]/g, "");
+}
+
+function getRuleById(ruleId) {
+  return RULES.find((rule) => rule.id === ruleId);
+}
+
+function getGapLabel(task, gapIndex) {
+  return `nach "${task.tokens[gapIndex]}"`;
+}
+
+function getMissingCommas(task) {
+  return sortCommaData(task.commas).filter(
+    (comma) => !state.selectedGaps.has(comma.gap)
+  );
+}
+
+function getExtraCommas(task) {
+  const correctSet = new Set(task.commas.map((comma) => comma.gap));
+  return [...state.selectedGaps]
+    .filter((gap) => !correctSet.has(gap))
+    .sort((left, right) => left - right);
+}
+
+function getWrongRules(task) {
+  return sortCommaData(task.commas).filter(
+    (comma) =>
+      state.selectedGaps.has(comma.gap) &&
+      state.ruleSelections[comma.gap] &&
+      state.ruleSelections[comma.gap] !== comma.rule
+  );
+}
+
+function getRuleHint(task, comma) {
+  const nextToken = task.tokens[comma.gap + 1];
+  const nextWord = normalizeToken(nextToken);
+
+  if (comma.rule === "subordinate") {
+    if (SUBORDINATE_STARTERS.has(nextWord)) {
+      return `Achte auf das Signalwort "${nextToken.replace(/[.,;:!?]/g, "")}". Dort beginnt ein Nebensatz, der mit einem Komma abgetrennt werden muss.`;
+    }
+
+    return "Suche das Ende des Nebensatzes: Sobald der übergeordnete Satz wieder einsetzt, brauchst du ein Komma.";
+  }
+
+  if (comma.rule === "addition") {
+    return "Prüfe, ob hier ein eingeschobener Zusatz beginnt oder endet. Solche Zusätze stehen vorne und hinten zwischen Kommas.";
+  }
+
+  return "Prüfe, ob hier zwei gleichrangige Glieder einer Aufzählung nebeneinanderstehen. Vor einfachem \"und\" oder \"oder\" steht dabei meist kein Komma.";
+}
+
+function getExtraCommaHint(task, gapIndex) {
+  const nextWord = normalizeToken(task.tokens[gapIndex + 1] || "");
+
+  if (SIMPLE_COORDINATORS.has(nextWord)) {
+    return `Vor dem einfachen "${nextWord}" steht in einer normalen Reihung kein Pflichtkomma.`;
+  }
+
+  return `Prüfe die Stelle ${getGapLabel(
+    task,
+    gapIndex
+  )}: Dort muss wirklich ein Nebensatz, ein Zusatz oder eine Aufzählung beginnen oder enden, sonst bleibt die Wortgrenze leer.`;
+}
+
+function buildHint(task) {
+  const missingCommas = getMissingCommas(task);
+  const extraCommas = getExtraCommas(task);
+  const wrongRules = getWrongRules(task);
+  const needsRules = currentLevel().requiresRules;
+
+  if (missingCommas.length > 0) {
+    const missingComma = missingCommas[0];
+    const rule = getRuleById(missingComma.rule);
+    return `Hinweis: Dir fehlt mindestens ein Komma ${getGapLabel(
+      task,
+      missingComma.gap
+    )}. Denke an die Regel "${rule ? rule.label : missingComma.rule}". ${getRuleHint(
+      task,
+      missingComma
+    )}`;
+  }
+
+  if (extraCommas.length > 0) {
+    return `Hinweis: Mindestens ein gesetztes Komma ist überflüssig. ${getExtraCommaHint(
+      task,
+      extraCommas[0]
+    )}`;
+  }
+
+  if (needsRules && wrongRules.length > 0) {
+    const wrongRule = wrongRules[0];
+    const correctRule = getRuleById(wrongRule.rule);
+    return `Hinweis: Die Kommastellen sitzen bereits. Prüfe jetzt die Regelzuordnung ${getGapLabel(
+      task,
+      wrongRule.gap
+    )}. Dort passt "${correctRule ? correctRule.label : wrongRule.rule}".`;
+  }
+
+  return "Hinweis: Gehe Wortgrenze für Wortgrenze durch und frage dich, ob dort ein Nebensatz endet, ein Zusatz eingeschoben ist oder eine echte Aufzählung vorliegt.";
+}
+
+function buildRuleExplanation(task, comma, index) {
+  const leftToken = task.tokens[comma.gap];
+  const rightToken = task.tokens[comma.gap + 1];
+  const nextWord = normalizeToken(rightToken);
+  const rule = getRuleById(comma.rule);
+
+  if (comma.rule === "subordinate") {
+    if (SUBORDINATE_STARTERS.has(nextWord)) {
+      return `
+        <article class="explanation-card">
+          <h4>Komma ${index + 1}: ${rule.label}</h4>
+          <p>Das Komma steht nach "${leftToken}" und vor "${rightToken}". Hier beginnt mit "${rightToken.replace(
+            /[.,;:!?]/g,
+            ""
+          )}" ein Nebensatz, der vom übergeordneten Satz abgetrennt werden muss.</p>
+          <p class="explanation-check">Selbstkontrolle: Suche das finite Verb des Nebensatzes und prüfe, wo der Hauptsatz unterbrochen wird.</p>
+        </article>
+      `;
+    }
+
+    return `
+      <article class="explanation-card">
+        <h4>Komma ${index + 1}: ${rule.label}</h4>
+        <p>Das Komma steht nach "${leftToken}" und vor "${rightToken}". An dieser Stelle endet ein Nebensatz; danach setzt der übergeordnete Satz wieder ein.</p>
+        <p class="explanation-check">Selbstkontrolle: Lies bis zum Ende des Nebensatzes und prüfe, wo der Hauptsatz grammatisch weitergeht.</p>
+      </article>
+    `;
+  }
+
+  if (comma.rule === "addition") {
+    return `
+      <article class="explanation-card">
+        <h4>Komma ${index + 1}: ${rule.label}</h4>
+        <p>Das Komma steht nach "${leftToken}" und vor "${rightToken}". Hier wird ein eingeschobener Zusatz vom Rest des Satzes abgegrenzt.</p>
+        <p class="explanation-check">Selbstkontrolle: Prüfe, ob der Satz ohne den Einschub grammatisch vollständig bleibt.</p>
+      </article>
+    `;
+  }
+
+  return `
+    <article class="explanation-card">
+      <h4>Komma ${index + 1}: ${rule.label}</h4>
+      <p>Das Komma steht nach "${leftToken}" und vor "${rightToken}". Es trennt hier zwei gleichrangige Glieder einer Aufzählung.</p>
+      <p class="explanation-check">Selbstkontrolle: Probeweise kannst du an dieser Stelle kurz "und" einsetzen. Klingt die Reihung weiterhin logisch, liegt meist eine Aufzählung vor.</p>
+    </article>
+  `;
+}
+
+function buildMistakeReview(task) {
+  const missingCommas = getMissingCommas(task);
+  const extraCommas = getExtraCommas(task);
+  const wrongRules = getWrongRules(task);
+  const items = [];
+
+  if (missingCommas.length > 0) {
+    items.push(
+      `<p><strong>Dir fehlten Kommata:</strong> ${missingCommas
+        .map((comma) => getGapLabel(task, comma.gap))
+        .join(", ")}.</p>`
+    );
+  }
+
+  if (extraCommas.length > 0) {
+    items.push(
+      `<p><strong>Diese Stellen waren zu viel:</strong> ${extraCommas
+        .map((gapIndex) => getGapLabel(task, gapIndex))
+        .join(", ")}.</p>`
+    );
+  }
+
+  if (wrongRules.length > 0) {
+    items.push(
+      `<p><strong>Diese Regeln musst du umstellen:</strong> ${wrongRules
+        .map((comma) => {
+          const rule = getRuleById(comma.rule);
+          return `${getGapLabel(task, comma.gap)} → ${
+            rule ? rule.label : comma.rule
+          }`;
+        })
+        .join("; ")}.</p>`
+    );
+  }
+
+  if (items.length === 0) {
+    return "";
+  }
+
+  return `
+    <div class="mistake-review">
+      <h4>Deine Selbstkorrektur</h4>
+      ${items.join("")}
+    </div>
+  `;
+}
+
 function areSameSelections(correctCommas) {
   const selected = [...state.selectedGaps].sort((left, right) => left - right);
   const correct = sortCommaData(correctCommas).map((comma) => comma.gap);
@@ -790,7 +1004,13 @@ function revealModel(task) {
     <p class="model-solution"><strong>Modelllösung:</strong> ${formatSentenceWithCommas(
       task
     )}</p>
-    <p><strong>Begründung:</strong> ${task.explanation}</p>
+    ${buildMistakeReview(task)}
+    <p><strong>Überblick:</strong> ${task.explanation}</p>
+    <div class="explanation-list">
+      ${sortCommaData(task.commas)
+        .map((comma, index) => buildRuleExplanation(task, comma, index))
+        .join("")}
+    </div>
     <div class="rule-tags">
       ${sortCommaData(task.commas)
         .map((comma, index) => {
@@ -837,28 +1057,13 @@ function handleFailure(task) {
   saveProgress();
   state.attempts += 1;
 
-  const correctGapHits = countCorrectGapHits(task.commas);
-  const totalCommas = task.commas.length;
-  const needsRules = currentLevel().requiresRules;
-
   if (state.attempts < 2) {
-    if (needsRules) {
-      const correctRuleHits = countCorrectRules(task.commas);
-      setFeedback(
-        `${correctGapHits} von ${totalCommas} Kommas sitzen. ${correctRuleHits} von ${totalCommas} Regeln stimmen bereits. Passe deine Auswahl an.`,
-        "error"
-      );
-    } else {
-      setFeedback(
-        `${correctGapHits} von ${totalCommas} Kommas sitzen. Prüfe besonders Nebensätze, Zusätze und die Stellen vor einfachem 'und'.`,
-        "error"
-      );
-    }
+    setFeedback(buildHint(task), "info");
     return;
   }
 
   setFeedback(
-    "Noch nicht korrekt. Die Modelllösung ist jetzt eingeblendet, damit du den Satz analysieren kannst.",
+    "Noch nicht korrekt. Jetzt wird die Musterlösung mit einer ausführlichen Regel-Erklärung eingeblendet, damit du deine Lösung Schritt für Schritt selbst korrigieren kannst.",
     "info"
   );
   revealModel(task);

@@ -569,6 +569,40 @@ button {
   line-height: 1.55;
 }
 
+.mistake-review,
+.explanation-card {
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line-soft);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.mistake-review h4,
+.explanation-card h4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.mistake-review p,
+.explanation-card p {
+  margin: 0;
+}
+
+.mistake-review {
+  display: grid;
+  gap: 8px;
+}
+
+.explanation-list {
+  display: grid;
+  gap: 10px;
+}
+
+.explanation-check {
+  color: var(--sky) !important;
+}
+
 .model-solution {
   font-size: 1.08rem;
   color: var(--text);
