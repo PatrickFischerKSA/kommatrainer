@@ -823,16 +823,14 @@ function getExtraCommaHint(task, gapIndex) {
   )}: Dort muss wirklich ein Nebensatz, ein Zusatz oder eine Aufzählung beginnen oder enden, sonst bleibt die Wortgrenze leer.`;
 }
 
-function buildHint(task) {
+function buildBeginnerHint(task) {
   const missingCommas = getMissingCommas(task);
   const extraCommas = getExtraCommas(task);
-  const wrongRules = getWrongRules(task);
-  const needsRules = currentLevel().requiresRules;
 
   if (missingCommas.length > 0) {
     const missingComma = missingCommas[0];
     const rule = getRuleById(missingComma.rule);
-    return `Hinweis: Dir fehlt mindestens ein Komma ${getGapLabel(
+    return `Hinweis für Anfänger*innen: Dir fehlt ein Komma ${getGapLabel(
       task,
       missingComma.gap
     )}. Denke an die Regel "${rule ? rule.label : missingComma.rule}". ${getRuleHint(
@@ -842,19 +840,111 @@ function buildHint(task) {
   }
 
   if (extraCommas.length > 0) {
-    return `Hinweis: Mindestens ein gesetztes Komma ist überflüssig. ${getExtraCommaHint(
+    return `Hinweis für Anfänger*innen: Ein gesetztes Komma ist zu viel. ${getExtraCommaHint(
       task,
       extraCommas[0]
     )}`;
   }
 
-  if (needsRules && wrongRules.length > 0) {
+  return "Hinweis für Anfänger*innen: Lies den Satz langsam laut und prüfe an jeder Wortgrenze, ob dort ein Nebensatz beginnt oder endet, ein Zusatz eingeschoben ist oder eine Aufzählung vorliegt.";
+}
+
+function buildAdvancedHint(task) {
+  const missingCommas = getMissingCommas(task);
+  const extraCommas = getExtraCommas(task);
+
+  if (missingCommas.length > 0) {
+    const missingComma = missingCommas[0];
+    const rule = getRuleById(missingComma.rule);
+    return `Hinweis für Fortgeschrittene: Im Satz fehlt eine Stelle mit der Regel "${
+      rule ? rule.label : missingComma.rule
+    }". Prüfe besonders den Bereich ${getGapLabel(task, missingComma.gap)} und frage dich, ob dort ein Einschub oder ein Nebensatz vom Hauptsatz getrennt werden muss.`;
+  }
+
+  if (extraCommas.length > 0) {
+    return "Hinweis für Fortgeschrittene: Mindestens ein Komma ist überflüssig. Kontrolliere zuerst Stellen vor einfachem \"und\" oder \"oder\" sowie Wortgrenzen, an denen weder Zusatz noch Nebensatz klar erkennbar sind.";
+  }
+
+  return "Hinweis für Fortgeschrittene: Analysiere zuerst die Satzstruktur und entscheide dann, welche Regel stärker ist: Aufzählung, Zusatz oder Nebensatz.";
+}
+
+function buildExpertHint(task) {
+  const missingCommas = getMissingCommas(task);
+  const extraCommas = getExtraCommas(task);
+  const wrongRules = getWrongRules(task);
+
+  if (missingCommas.length > 0 || extraCommas.length > 0) {
+    const targetComma = missingCommas[0];
+    if (targetComma) {
+      const rule = getRuleById(targetComma.rule);
+      return `Hinweis für Expert*innen: Deine Analyse ist bei mindestens einer Kommastelle noch nicht präzise genug. Überprüfe die Zone ${getGapLabel(
+        task,
+        targetComma.gap
+      )} und unterscheide sauber zwischen ${rule ? rule.short : "Regeltyp"} und bloßer Satzmelodie.`;
+    }
+
+    return "Hinweis für Expert*innen: Mindestens ein gesetztes Komma beruht eher auf Intuition als auf Regelwissen. Prüfe vor allem Stellen, an denen kein vollständiger Nebensatz und kein klarer Zusatz vorliegt.";
+  }
+
+  if (wrongRules.length > 0) {
     const wrongRule = wrongRules[0];
-    const correctRule = getRuleById(wrongRule.rule);
-    return `Hinweis: Die Kommastellen sitzen bereits. Prüfe jetzt die Regelzuordnung ${getGapLabel(
+    return `Hinweis für Expert*innen: Die Kommastellen stimmen bereits. Überdenke jetzt ${getGapLabel(
       task,
       wrongRule.gap
-    )}. Dort passt "${correctRule ? correctRule.label : wrongRule.rule}".`;
+    )} und entscheide, ob dort wirklich eine Aufzählung vorliegt oder ob die Stelle strukturell zu Zusatz oder Nebensatz gehört.`;
+  }
+
+  return "Hinweis für Expert*innen: Prüfe nicht nur, wo ein Komma steht, sondern mit welcher Begründung es dort stehen muss.";
+}
+
+function buildProHint(task) {
+  const missingCommas = getMissingCommas(task);
+  const extraCommas = getExtraCommas(task);
+  const wrongRules = getWrongRules(task);
+
+  if (missingCommas.length > 0) {
+    const missingComma = missingCommas[0];
+    const rule = getRuleById(missingComma.rule);
+    return `Hinweis für Profis: Dir fehlt eine strukturell wichtige Grenze ${getGapLabel(
+      task,
+      missingComma.gap
+    )}. Prüfe hier die Hierarchie der Regeln: ${
+      rule ? rule.label : missingComma.rule
+    } hat möglicherweise Vorrang vor einer bloßen Reihung.`;
+  }
+
+  if (extraCommas.length > 0) {
+    return "Hinweis für Profis: Mindestens ein Komma markiert keine echte Satzgrenze. Frage dich, ob du eine stilistische Sprechpause mit einer grammatischen Kommaregel verwechselt hast.";
+  }
+
+  if (wrongRules.length > 0) {
+    const wrongRule = wrongRules[0];
+    return `Hinweis für Profis: Die Setzung stimmt, aber die Begründung noch nicht vollständig. Analysiere ${getGapLabel(
+      task,
+      wrongRule.gap
+    )} aus der Satzhierarchie heraus: Welche Struktur wird hier tatsächlich vom Rest abgegrenzt?`;
+  }
+
+  return "Hinweis für Profis: Rekonstruiere den Satz hierarchisch: Hauptsatz, Einschub, Nebensatz, Reihung. Erst daraus ergibt sich die passende Regel.";
+}
+
+function buildHint(task) {
+  const levelId = currentLevel().id;
+
+  if (levelId === "beginner") {
+    return buildBeginnerHint(task);
+  }
+
+  if (levelId === "advanced") {
+    return buildAdvancedHint(task);
+  }
+
+  if (levelId === "expert") {
+    return buildExpertHint(task);
+  }
+
+  if (levelId === "pro") {
+    return buildProHint(task);
   }
 
   return "Hinweis: Gehe Wortgrenze für Wortgrenze durch und frage dich, ob dort ein Nebensatz endet, ein Zusatz eingeschoben ist oder eine echte Aufzählung vorliegt.";
